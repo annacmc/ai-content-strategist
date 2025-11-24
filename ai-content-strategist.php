@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: AI Content Strategist
- * Plugin URI: https://github.com/your-vendor/ai-content-strategist
+ * Plugin URI: https://github.com/annacmc/ai-content-strategist
  * Description: Exposes Jetpack Stats data and content audit capabilities via the WordPress Abilities API for AI assistants through MCP.
  * Version: 1.0.0
  * Requires at least: 6.5
