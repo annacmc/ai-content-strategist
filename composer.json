@@ -1,0 +1,21 @@
+{
+    "name": "your-vendor/ai-content-strategist",
+    "description": "Expose Jetpack Stats and content audit via WordPress Abilities API for AI assistants",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "require": {
+        "php": ">=8.0",
+        "wordpress/abilities-api": "*",
+        "wordpress/mcp-adapter": "*"
+    },
+    "autoload": {
+        "classmap": [
+            "includes/"
+        ]
+    },
+    "config": {
+        "allow-plugins": {
+            "automattic/jetpack-autoloader": true
+        }
+    }
+}
