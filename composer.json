@@ -5,8 +5,8 @@
     "license": "GPL-2.0-or-later",
     "require": {
         "php": ">=8.0",
-        "wordpress/abilities-api": "*",
-        "wordpress/mcp-adapter": "*"
+        "wordpress/abilities-api": "^0.4",
+        "wordpress/mcp-adapter": "^0.3"
     },
     "autoload": {
         "classmap": [
