@@ -147,7 +147,7 @@ class Plugin {
 
 		if ( ! self::is_jetpack_connected() ) {
 			?>
-			<div class="notice notice-warning">
+			<div class="notice notice-warning is-dismissible">
 				<p>
 					<strong><?php esc_html_e( 'AI Content Strategist:', 'ai-content-strategist' ); ?></strong>
 					<?php
