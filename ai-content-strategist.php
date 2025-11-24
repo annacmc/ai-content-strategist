@@ -56,5 +56,19 @@ function ai_content_strategist_init() {
 	return AI_Content_Strategist\Plugin::get_instance();
 }
 
+/**
+ * Load plugin text domain for translations.
+ */
+function ai_content_strategist_load_textdomain() {
+	load_plugin_textdomain(
+		'ai-content-strategist',
+		false,
+		dirname( plugin_basename( AI_CONTENT_STRATEGIST_PLUGIN_FILE ) ) . '/languages'
+	);
+}
+
 // Initialize the plugin after WordPress is fully loaded.
 add_action( 'plugins_loaded', 'ai_content_strategist_init' );
+
+// Load translations.
+add_action( 'init', 'ai_content_strategist_load_textdomain' );
