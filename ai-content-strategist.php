@@ -72,3 +72,21 @@ add_action( 'plugins_loaded', 'ai_content_strategist_init' );
 
 // Load translations.
 add_action( 'init', 'ai_content_strategist_load_textdomain' );
+
+/**
+ * Clean up plugin transients on deactivation.
+ */
+function ai_content_strategist_deactivate() {
+	global $wpdb;
+
+	// Delete all plugin transients.
+	$wpdb->query(
+		$wpdb->prepare(
+			"DELETE FROM {$wpdb->options} WHERE option_name LIKE %s OR option_name LIKE %s",
+			'_transient_ai_cs_%',
+			'_transient_timeout_ai_cs_%'
+		)
+	);
+}
+
+register_deactivation_hook( AI_CONTENT_STRATEGIST_PLUGIN_FILE, 'ai_content_strategist_deactivate' );
