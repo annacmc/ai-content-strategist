@@ -245,9 +245,12 @@ class Content_Abilities {
 				// Get categories.
 				$categories = wp_get_post_categories( $post->ID, array( 'fields' => 'names' ) );
 
+				// Get timestamps, falling back to local time if GMT is zeroed (common for drafts).
+				$created_timestamp  = $this->get_post_timestamp( $post, 'date' );
+				$modified_timestamp = $this->get_post_timestamp( $post, 'modified' );
+
 				// Calculate days since modified.
-				$modified_timestamp = strtotime( $post->post_modified_gmt );
-				$days_since         = (int) floor( ( time() - $modified_timestamp ) / DAY_IN_SECONDS );
+				$days_since = (int) floor( ( time() - $modified_timestamp ) / DAY_IN_SECONDS );
 
 				// Get word count.
 				$word_count = $this->get_word_count( $post->post_content );
@@ -262,7 +265,7 @@ class Content_Abilities {
 					'post_id'             => $post->ID,
 					'title'               => $title,
 					'excerpt'             => $excerpt,
-					'date_created'        => gmdate( 'c', strtotime( $post->post_date_gmt ) ),
+					'date_created'        => gmdate( 'c', $created_timestamp ),
 					'date_modified'       => gmdate( 'c', $modified_timestamp ),
 					'days_since_modified' => $days_since,
 					'categories'          => is_array( $categories ) ? $categories : array(),
@@ -365,6 +368,38 @@ class Content_Abilities {
 		);
 
 		return $result;
+	}
+
+	/**
+	 * Get a post timestamp, falling back to local time if GMT is zeroed.
+	 *
+	 * Draft posts often have zeroed GMT dates (0000-00-00 00:00:00) because
+	 * they haven't been published. This method falls back to the local
+	 * timezone date in that case.
+	 *
+	 * @param \WP_Post $post The post object.
+	 * @param string   $type Either 'date' for creation or 'modified' for last modified.
+	 * @return int Unix timestamp.
+	 */
+	private function get_post_timestamp( \WP_Post $post, string $type = 'date' ): int {
+		$gmt_field   = 'modified' === $type ? 'post_modified_gmt' : 'post_date_gmt';
+		$local_field = 'modified' === $type ? 'post_modified' : 'post_date';
+
+		// Check if GMT date is valid (not zeroed).
+		$gmt_date = $post->$gmt_field;
+		if ( ! empty( $gmt_date ) && '0000-00-00 00:00:00' !== $gmt_date ) {
+			return strtotime( $gmt_date );
+		}
+
+		// Fall back to local date and convert to UTC timestamp.
+		$local_date = $post->$local_field;
+		if ( ! empty( $local_date ) && '0000-00-00 00:00:00' !== $local_date ) {
+			// Use WordPress function to convert local time to UTC timestamp.
+			return get_gmt_from_date( $local_date, 'U' );
+		}
+
+		// Last resort: return current time.
+		return time();
 	}
 
 	/**
