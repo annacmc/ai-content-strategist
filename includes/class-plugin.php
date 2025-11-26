@@ -73,6 +73,9 @@ class Plugin {
 	 * Sets up the hooks needed for the plugin to function.
 	 */
 	private function init_hooks(): void {
+		// Register ability category on the categories init hook.
+		add_action( 'wp_abilities_api_categories_init', array( $this, 'register_ability_category' ) );
+
 		// Register abilities on the Abilities API init hook.
 		add_action( 'wp_abilities_api_init', array( $this, 'register_abilities' ) );
 
@@ -96,6 +99,23 @@ class Plugin {
 
 		// Register content audit abilities (WordPress-native).
 		$this->content_abilities->register();
+	}
+
+	/**
+	 * Register the content ability category.
+	 *
+	 * The WordPress Abilities API only provides 'site' and 'user' categories
+	 * by default. This plugin needs a 'content' category for its abilities.
+	 * Called on the 'wp_abilities_api_categories_init' hook.
+	 */
+	public function register_ability_category(): void {
+		wp_register_ability_category(
+			'content',
+			array(
+				'label'       => __( 'Content', 'ai-content-strategist' ),
+				'description' => __( 'Abilities for content analysis, auditing, and strategy.', 'ai-content-strategist' ),
+			)
+		);
 	}
 
 	/**
