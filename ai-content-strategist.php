@@ -28,15 +28,18 @@ define( 'AI_CONTENT_STRATEGIST_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'AI_CONTENT_STRATEGIST_PLUGIN_FILE', __FILE__ );
 
 /**
- * Load Composer autoloader if it exists.
+ * Load autoloader.
  *
- * The Jetpack Autoloader is preferred if available, as it handles
- * version conflicts between plugins using the same packages.
+ * The Jetpack Autoloader handles version conflicts between plugins using
+ * the same packages by always loading the latest version available.
  */
-$autoloader_file = AI_CONTENT_STRATEGIST_PLUGIN_DIR . 'vendor/autoload.php';
+$jetpack_autoloader = AI_CONTENT_STRATEGIST_PLUGIN_DIR . 'vendor/autoload_packages.php';
+$composer_autoloader = AI_CONTENT_STRATEGIST_PLUGIN_DIR . 'vendor/autoload.php';
 
-if ( file_exists( $autoloader_file ) ) {
-	require_once $autoloader_file;
+if ( file_exists( $jetpack_autoloader ) ) {
+	require_once $jetpack_autoloader;
+} elseif ( file_exists( $composer_autoloader ) ) {
+	require_once $composer_autoloader;
 }
 
 // Load plugin class files.
