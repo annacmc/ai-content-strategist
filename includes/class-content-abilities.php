@@ -217,6 +217,25 @@ class Content_Abilities {
 	}
 
 	/**
+	 * Validate and sanitize a numeric parameter within bounds.
+	 *
+	 * @param mixed $value   The value to validate.
+	 * @param int   $default Default value if invalid.
+	 * @param int   $min     Minimum allowed value.
+	 * @param int   $max     Maximum allowed value.
+	 * @return int Validated value.
+	 */
+	private function validate_int_param( mixed $value, int $default, int $min, int $max ): int {
+		$value = (int) $value;
+
+		if ( $value < $min || $value > $max ) {
+			return $default;
+		}
+
+		return $value;
+	}
+
+	/**
 	 * Execute the get-stale-drafts ability.
 	 *
 	 * Queries for draft posts that haven't been modified in the specified

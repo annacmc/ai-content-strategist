@@ -186,6 +186,54 @@ class Stats_Abilities {
 	}
 
 	/**
+	 * Validate and sanitize days parameter for top posts.
+	 *
+	 * @param mixed $days The days value to validate.
+	 * @return int Validated days value (7, 30, or 90).
+	 */
+	private function validate_top_posts_days( mixed $days ): int {
+		$valid_days = array( 7, 30, 90 );
+		$days       = (int) $days;
+
+		return in_array( $days, $valid_days, true ) ? $days : 30;
+	}
+
+	/**
+	 * Validate and sanitize limit parameter.
+	 *
+	 * @param mixed $limit   The limit value to validate.
+	 * @param int   $default Default value if invalid.
+	 * @param int   $min     Minimum allowed value.
+	 * @param int   $max     Maximum allowed value.
+	 * @return int Validated limit value.
+	 */
+	private function validate_limit( mixed $limit, int $default, int $min, int $max ): int {
+		$limit = (int) $limit;
+
+		if ( $limit < $min || $limit > $max ) {
+			return $default;
+		}
+
+		return $limit;
+	}
+
+	/**
+	 * Validate and sanitize days parameter for search terms.
+	 *
+	 * @param mixed $days The days value to validate.
+	 * @return int Validated days value (1-365).
+	 */
+	private function validate_search_days( mixed $days ): int {
+		$days = (int) $days;
+
+		if ( $days < 1 || $days > 365 ) {
+			return 30;
+		}
+
+		return $days;
+	}
+
+	/**
 	 * Execute the get-top-posts ability.
 	 *
 	 * Fetches top posts from Jetpack Stats and enriches them with
