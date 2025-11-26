@@ -110,6 +110,11 @@ class Stats_Abilities {
 					return current_user_can( 'edit_posts' );
 				},
 				'meta' => array(
+					'annotations'  => array(
+						'readonly'    => true,
+						'destructive' => false,
+						'idempotent'  => true,
+					),
 					'show_in_rest' => true,
 				),
 			)
@@ -169,6 +174,11 @@ class Stats_Abilities {
 					return current_user_can( 'edit_posts' );
 				},
 				'meta' => array(
+					'annotations'  => array(
+						'readonly'    => true,
+						'destructive' => false,
+						'idempotent'  => true,
+					),
 					'show_in_rest' => true,
 				),
 			)
