@@ -132,21 +132,32 @@ Finds published posts with low traffic.
 
 ### REST API
 
+The REST API uses [WordPress Application Passwords](https://make.wordpress.org/core/2020/11/05/application-passwords-integration-guide/) for authentication. Create one in WordPress admin under Users → Your Profile → Application Passwords.
+
 List all registered abilities:
 
 ```bash
 curl -X GET "https://your-site.com/wp-json/wp-abilities/v1/abilities" \
-  -H "Authorization: Bearer YOUR_TOKEN"
+  -u "username:xxxx xxxx xxxx xxxx xxxx xxxx"
 ```
 
-Execute an ability:
+Execute a read-only ability (uses GET with PHP array syntax for parameters):
 
 ```bash
-curl -X POST "https://your-site.com/wp-json/wp-abilities/v1/content-strategist/get-stale-drafts/run" \
-  -H "Authorization: Bearer YOUR_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{"days_old": 90, "limit": 5}'
+curl -X GET "https://your-site.com/wp-json/wp-abilities/v1/abilities/content-strategist/get-stale-drafts/run?input[days_old]=90&input[limit]=5" \
+  -u "username:xxxx xxxx xxxx xxxx xxxx xxxx"
 ```
+
+Execute a write ability (uses POST with JSON body):
+
+```bash
+curl -X POST "https://your-site.com/wp-json/wp-abilities/v1/abilities/example/write-ability/run" \
+  -u "username:xxxx xxxx xxxx xxxx xxxx xxxx" \
+  -H "Content-Type: application/json" \
+  -d '{"input": {"param": "value"}}'
+```
+
+Note: Read-only abilities (marked with `readonly: true` annotation) require GET requests with parameters passed as query string arrays. Write abilities require POST requests with JSON body.
 
 ### MCP Inspector
 
