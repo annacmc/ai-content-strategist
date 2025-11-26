@@ -118,6 +118,9 @@ class Content_Abilities {
 						'idempotent'  => true,
 					),
 					'show_in_rest' => true,
+					'mcp'          => array(
+						'public' => true,
+					),
 				),
 			)
 		);
@@ -211,6 +214,9 @@ class Content_Abilities {
 						'idempotent'  => true,
 					),
 					'show_in_rest' => true,
+					'mcp'          => array(
+						'public' => true,
+					),
 				),
 			)
 		);

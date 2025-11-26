@@ -116,6 +116,9 @@ class Stats_Abilities {
 						'idempotent'  => true,
 					),
 					'show_in_rest' => true,
+					'mcp'          => array(
+						'public' => true,
+					),
 				),
 			)
 		);
@@ -180,6 +183,9 @@ class Stats_Abilities {
 						'idempotent'  => true,
 					),
 					'show_in_rest' => true,
+					'mcp'          => array(
+						'public' => true,
+					),
 				),
 			)
 		);
