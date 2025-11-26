@@ -8,6 +8,8 @@
  * @package AI_Content_Strategist
  */
 
+declare( strict_types = 1 );
+
 namespace AI_Content_Strategist;
 
 // Prevent direct file access.
