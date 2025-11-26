@@ -248,8 +248,9 @@ class Stats_Abilities {
 			return Plugin::get_jetpack_not_connected_error();
 		}
 
-		$days  = $input['days'] ?? 30;
-		$limit = $input['limit'] ?? 10;
+		// Validate and sanitize input parameters.
+		$days  = $this->validate_top_posts_days( $input['days'] ?? 30 );
+		$limit = $this->validate_limit( $input['limit'] ?? 10, 10, 1, 50 );
 
 		// Try to get cached data first.
 		$cache_key = 'ai_cs_top_posts_' . $days . '_' . $limit;
@@ -356,8 +357,9 @@ class Stats_Abilities {
 			return Plugin::get_jetpack_not_connected_error();
 		}
 
-		$days  = $input['days'] ?? 30;
-		$limit = $input['limit'] ?? 20;
+		// Validate and sanitize input parameters.
+		$days  = $this->validate_search_days( $input['days'] ?? 30 );
+		$limit = $this->validate_limit( $input['limit'] ?? 20, 20, 1, 100 );
 
 		// Try to get cached data first.
 		$cache_key = 'ai_cs_search_terms_' . $days . '_' . $limit;

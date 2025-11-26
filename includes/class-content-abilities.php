@@ -245,8 +245,9 @@ class Content_Abilities {
 	 * @return array Array of stale draft posts.
 	 */
 	public function execute_get_stale_drafts( array $input ): array {
-		$days_old = $input['days_old'] ?? 180;
-		$limit    = $input['limit'] ?? 20;
+		// Validate and sanitize input parameters.
+		$days_old = $this->validate_int_param( $input['days_old'] ?? 180, 180, 7, 730 );
+		$limit    = $this->validate_int_param( $input['limit'] ?? 20, 20, 1, 50 );
 
 		// Calculate the cutoff date.
 		$cutoff_date = gmdate( 'Y-m-d H:i:s', strtotime( "-{$days_old} days" ) );
@@ -322,9 +323,10 @@ class Content_Abilities {
 	 * @return array|\WP_Error Array of underperforming posts or error.
 	 */
 	public function execute_get_underperforming_posts( array $input ): array|\WP_Error {
-		$days_published = $input['days_published'] ?? 90;
-		$max_views      = $input['max_views'] ?? 100;
-		$limit          = $input['limit'] ?? 20;
+		// Validate and sanitize input parameters.
+		$days_published = $this->validate_int_param( $input['days_published'] ?? 90, 90, 30, 730 );
+		$max_views      = $this->validate_int_param( $input['max_views'] ?? 100, 100, 0, 10000 );
+		$limit          = $this->validate_int_param( $input['limit'] ?? 20, 20, 1, 50 );
 
 		// Check if Jetpack is available for view data.
 		$has_jetpack = Plugin::is_jetpack_connected() && Plugin::is_stats_available();
