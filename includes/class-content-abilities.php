@@ -423,14 +423,18 @@ class Content_Abilities {
 		// Check if GMT date is valid (not zeroed).
 		$gmt_date = $post->$gmt_field;
 		if ( ! empty( $gmt_date ) && '0000-00-00 00:00:00' !== $gmt_date ) {
-			return strtotime( $gmt_date );
+			$timestamp = strtotime( $gmt_date );
+			if ( false !== $timestamp ) {
+				return $timestamp;
+			}
 		}
 
 		// Fall back to local date and convert to UTC timestamp.
 		$local_date = $post->$local_field;
 		if ( ! empty( $local_date ) && '0000-00-00 00:00:00' !== $local_date ) {
 			// Use WordPress function to convert local time to UTC timestamp.
-			return get_gmt_from_date( $local_date, 'U' );
+			// get_gmt_from_date returns string, cast to int for strict types.
+			return (int) get_gmt_from_date( $local_date, 'U' );
 		}
 
 		// Last resort: return current time.
