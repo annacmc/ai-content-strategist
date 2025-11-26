@@ -47,8 +47,9 @@ class Content_Abilities {
 				'description' => __( 'Finds draft posts that have been sitting unfinished for a specified period. Useful for identifying content to complete or delete.', 'ai-content-strategist' ),
 				'category'    => 'content',
 				'input_schema' => array(
-					'type'       => 'object',
-					'properties' => array(
+					'type'                 => 'object',
+					'additionalProperties' => false,
+					'properties'           => array(
 						'days_old' => array(
 							'type'        => 'integer',
 							'description' => __( 'Find drafts not modified in this many days', 'ai-content-strategist' ),
@@ -131,8 +132,9 @@ class Content_Abilities {
 				'description' => __( 'Finds published posts with low traffic. Useful for identifying content to refresh, promote, or remove. Requires Jetpack for view data.', 'ai-content-strategist' ),
 				'category'    => 'content',
 				'input_schema' => array(
-					'type'       => 'object',
-					'properties' => array(
+					'type'                 => 'object',
+					'additionalProperties' => false,
+					'properties'           => array(
 						'days_published' => array(
 							'type'        => 'integer',
 							'description' => __( 'Only include posts published at least this many days ago (to give them time to get traffic)', 'ai-content-strategist' ),

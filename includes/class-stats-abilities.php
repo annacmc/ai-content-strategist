@@ -54,8 +54,9 @@ class Stats_Abilities {
 				'description' => __( 'Returns the site\'s top performing posts by views. Useful for understanding what content resonates with your audience.', 'ai-content-strategist' ),
 				'category'    => 'content',
 				'input_schema' => array(
-					'type'       => 'object',
-					'properties' => array(
+					'type'                 => 'object',
+					'additionalProperties' => false,
+					'properties'           => array(
 						'days'  => array(
 							'type'        => 'integer',
 							'description' => __( 'Number of days to analyze (7, 30, or 90)', 'ai-content-strategist' ),
@@ -128,8 +129,9 @@ class Stats_Abilities {
 				'description' => __( 'Returns search terms people used to find your site. Useful for identifying content opportunities and SEO gaps.', 'ai-content-strategist' ),
 				'category'    => 'content',
 				'input_schema' => array(
-					'type'       => 'object',
-					'properties' => array(
+					'type'                 => 'object',
+					'additionalProperties' => false,
+					'properties'           => array(
 						'days'  => array(
 							'type'        => 'integer',
 							'description' => __( 'Number of days to analyze', 'ai-content-strategist' ),
