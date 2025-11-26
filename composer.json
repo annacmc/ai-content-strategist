@@ -5,6 +5,7 @@
     "license": "GPL-2.0-or-later",
     "require": {
         "php": ">=8.0",
+        "automattic/jetpack-autoloader": "^3.1",
         "wordpress/abilities-api": "^0.4",
         "wordpress/mcp-adapter": "^0.3"
     },
@@ -16,6 +17,7 @@
     "config": {
         "allow-plugins": {
             "automattic/jetpack-autoloader": true
-        }
+        },
+        "optimize-autoloader": true
     }
 }
