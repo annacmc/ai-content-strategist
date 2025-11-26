@@ -79,8 +79,23 @@ class Plugin {
 		// Register abilities on the Abilities API init hook.
 		add_action( 'wp_abilities_api_init', array( $this, 'register_abilities' ) );
 
+		// Initialize the MCP Adapter to expose abilities via MCP protocol.
+		$this->init_mcp_adapter();
+
 		// Add admin notice if Jetpack is not connected.
 		add_action( 'admin_notices', array( $this, 'maybe_show_jetpack_notice' ) );
+	}
+
+	/**
+	 * Initialize the MCP Adapter.
+	 *
+	 * The MCP Adapter automatically creates a default server that exposes
+	 * all registered WordPress abilities through the Model Context Protocol.
+	 */
+	private function init_mcp_adapter(): void {
+		if ( class_exists( \WP\MCP\Core\McpAdapter::class ) ) {
+			\WP\MCP\Core\McpAdapter::instance();
+		}
 	}
 
 	/**
